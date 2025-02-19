@@ -1,27 +1,16 @@
-import { Button } from "./components/ui/Button";
-import { useState } from "react";
-import {PlusIcon} from "./icons/PlusIcon"; 
-import {ShareIcon} from "./icons/ShareIcon";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Signin } from "./pages/Signin";
+import { Signup } from "./pages/Signup";
+import { Dashboard } from "./pages/Dashboard";
 function App() {
   return (
-    <div>
-      <Button
-        startIcon={<PlusIcon size="lg"/>} 
-        size="sm" 
-        variant="primary" 
-        text="Share" 
-        endIcon={<ShareIcon size="lg" />}/>
-        
-      <Button 
-        size="md" 
-        variant="secondary" 
-        text="Add Content"  />
-      <Button 
-        size="lg" 
-        variant="secondary" 
-        text="Add Content"  />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </ Routes >
+    </BrowserRouter>
   )
 }
-
-export default App
+export default App;

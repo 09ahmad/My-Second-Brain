@@ -29,7 +29,7 @@ mongoose.connect(config.MONGODB_URL)
   .then(() => console.log("MONGODB connected"))
   .catch((error) => console.log("MONGODB connection error ", error))
 
-router.post("/v1/Register", async (req, res) => {
+router.post("/v1/register", async (req, res) => {
     const validateInput = registerSchema.safeParse(req.body);
     if (!validateInput.success) {
         res.status(400).json({
@@ -38,12 +38,11 @@ router.post("/v1/Register", async (req, res) => {
         })
         return;
     }
-    const { username, email, password } = req.body;
+    const { username, password } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         await userModel.create({
             username: username,
-            email: email,
             password: hashedPassword,
         })
         res.status(200).json({
@@ -61,8 +60,8 @@ router.post("/v1/Register", async (req, res) => {
 router.post("/v1/login", async (req: Request, res: Response) => {
 
     try {
-        const { email, password } = req.body;
-        const user = await userModel.findOne({ email })
+        const { username, password } = req.body;
+        const user = await userModel.findOne({ username })
 
         if (!user || !user.password) {
             res.status(404).json({
